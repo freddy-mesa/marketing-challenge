@@ -1,5 +1,3 @@
-import { EventType } from "./event.type";
-
 export interface EventDto {
     signature: EventSignatureDto
     "event-data": EventDataDto
@@ -13,12 +11,14 @@ export interface EventDataDto {
     id: string
     timestamp: number,
     "log-level": string,
-    event: EventType,
+    event: string,   
     message: EventDataMessageDto,
+    recipient: string,
     "recipient-domain": string
+	ip: string,
     geolocation: EventDataGeolocationDto
     "client-info": EventDataClientInfoDto
-    campaings: EventDataCampaingListDto
+    campaings: any[]
     tags: string[]
     "user-variables": Object
 }
@@ -39,7 +39,4 @@ export interface EventDataClientInfoDto {
     "client-name": string
     "client-type": string
     "user-agent": string
-}
-export interface EventDataCampaingListDto {
-    campaings: []
 }

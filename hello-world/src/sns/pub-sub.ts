@@ -1,5 +1,5 @@
 import { EventTopic } from "./event.topic";
 
 export interface PubSub {
-    publish(event: EventTopic)
+    publish(event: EventTopic) : Promise<void>
 }
