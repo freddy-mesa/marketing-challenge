@@ -6,7 +6,6 @@
   "license": "MIT",
   "scripts": {
     "build": "cpx \"package.json\" ./dist/ && tsc",
-    "serve": "nodemon src/app.local.ts",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",

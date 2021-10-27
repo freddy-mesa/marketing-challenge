@@ -1,4 +1,4 @@
-import  { APIGatewayProxyEventV2 } from "aws-lambda"
+import { APIGatewayProxyEventV2 } from "aws-lambda"
 import { Database } from './dao/database';
 import { DynamoDBDatabase } from './dao/dynamo.database';
 import { PubSub } from './sns/pub-sub';
