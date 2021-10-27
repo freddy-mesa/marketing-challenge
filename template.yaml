@@ -22,7 +22,7 @@ Resources:
           AWS_ACCESS_KEY_ID: "123"
           SNS_ARN_TOPIC_NAME: "arn:aws:sns:us-east-1:000000000000:receeve-challenge-topic"
           DYNAMO_TABLE_NAME: "receeve-challenge-table"
-          MAILGUN_SIGNING_KEY: "f6ecbdb7d9a52758b64e3c02611a4041-2bf328a5-751b3744"
+          MAILGUN_SIGNING_KEY: "123"
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref ReceeveChallengeTable
