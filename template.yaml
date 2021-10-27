@@ -32,7 +32,7 @@ Resources:
         ReceeveChallenge:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /receeve-challenge
+            Path: /challenge
             Method: post
   ReceeveChallengeTable:
     Type: AWS::DynamoDB::Table
@@ -53,7 +53,7 @@ Resources:
 Outputs:
   ReceeveChallengeApi:
     Description: "API Gateway endpoint URL for Prod stage for Receeve Challenge function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/receeve-challenge/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/challenge/"
   ReceeveChallengeFunction:
     Description: "Receeve Challenge Lambda Function ARN"
     Value: !GetAtt ReceeveChallengeFunction.Arn
