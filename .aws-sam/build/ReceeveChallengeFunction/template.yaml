@@ -23,11 +23,6 @@ Resources:
           SNS_ARN_TOPIC_NAME: "arn:aws:sns:us-east-1:000000000000:receeve-challenge-topic"
           DYNAMO_TABLE_NAME: "receeve-challenge-table"
           MAILGUN_SIGNING_KEY: "f6ecbdb7d9a52758b64e3c02611a4041-2bf328a5-751b3744"
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref ReceeveChallengeTable
-        - SNSPublishMessagePolicy:
-            TopicName: !Ref ReceeveChallengeTopic
       Events:
         ReceeveChallenge:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -44,12 +39,13 @@ Resources:
       KeySchema: 
         - AttributeName: id
           KeyType: HASH
-      BillingMode: PAY_PER_REQUEST 
+      ProvisionedThroughput: 
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
   ReceeveChallengeTopic:
     Type: AWS::SNS::Topic
     Properties: 
       TopicName: receeve-challenge-topic
-      
 Outputs:
   ReceeveChallengeApi:
     Description: "API Gateway endpoint URL for Prod stage for Receeve Challenge function"
