@@ -19,9 +19,9 @@ const GetProviderUseCase = (reqSignature: EventSignatureDto) : EventProvider => 
         .update(reqSignature.timestamp.concat(reqSignature.token))
         .digest('hex')
     
-    return (encodedSignature === reqSignature.signature) ? 
-        EventProvider.MAILGUN 
-        : EventProvider.NONE
+    if (encodedSignature === reqSignature.signature) return EventProvider.MAILGUN 
+
+    throw new Error('Invalid Provider')
 }
 
 const SaveEventUseCase = async(db: Database, repository: EventRepository, event: EventDto) : Promise<EventEntity|undefined>  => {

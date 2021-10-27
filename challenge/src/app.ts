@@ -54,20 +54,31 @@ const database: Database = new DynamoDBDatabase(process.env.DYNAMO_TABLE_NAME ??
 const pubsub: PubSub = new SnsPubSub(process.env.SNS_ARN_TOPIC_NAME ?? "") 
 
 const lambdaHandler = async (event: APIGatewayProxyEventV2, _: any) => {
-    const data = JSON.parse(event.body ?? "") as EventDto
-    const provider = GetProviderUseCase(data.signature)
-    if (provider != EventProvider.NONE) {
+    let errorHandling: Error | undefined
+    try {
+        const data = JSON.parse(event.body ?? "") as EventDto
+        const provider = GetProviderUseCase(data.signature)
         await SaveEventUseCase(database, new EventRepositoryImpl(), data)
         await PublishEventUseCase(pubsub, new EventPublisherImpl(), data, provider)
-    }
 
+        return {
+            "statusCode": 201,
+            "body": JSON.stringify({
+                message: `Event Processed`,
+                data: data
+            })
+        };
+    } catch (error) {
+        errorHandling = error as Error
+    }
+        
     return {
-        "statusCode": 201,
+        "statusCode": 404,
         "body": JSON.stringify({
-            message: `Event Processed`,
-            data: data
+            error: errorHandling?.message ?? "",
         })
     };
+    
 };
 
 export {

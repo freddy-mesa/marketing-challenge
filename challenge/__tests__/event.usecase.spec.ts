@@ -21,10 +21,10 @@ describe('Event UseCases', () => {
   let db: Database
 
   const eventDto : EventDto = {
-    "signature": {
-      token: "e07070bc2a44e54881b6316ed3dca8da6e8b548f440808e486",
-      timestamp: '1635114174',
-      signature: '01e8197469adbc42b6aa6756a262fbc3f4ca45a81b6d56aa904df83648760d84'
+    signature: {
+      token:"e9fcd77dfe9d4e948bf57b26fbd4635e3c37dc65ceaed3d93e",
+      timestamp:"1635306152",
+      signature:"37d6c48f2437d94413293d6c9021d725e616214860e9cd176ddeff74cb60f325"
     },
     'event-data': {
       id: 'Ase7i2zsRYeDXztHGENqRA',
@@ -60,24 +60,26 @@ describe('Event UseCases', () => {
   describe('GetProviderUseCase Valid', () => {
     let provider: EventProvider
     beforeEach(() => {
-      provider = GetProviderUseCase(eventDto.signature)
+      try {
+        provider = GetProviderUseCase(eventDto.signature)
+      } catch (error) {
+        console.log(error)
+      }      
     })
     it('should be a valid provider', () => {
       expect(provider).toBeDefined()
       expect(provider).toEqual(EventProvider.MAILGUN)
-
     })
   });
 
   describe('GetProviderUseCase Invalid', () => {
-    let provider: EventProvider
-    beforeEach(() => {
+    test('should be an invalid provider', () => {
+      try {
       eventDto.signature.token = 'invalid'
-      provider = GetProviderUseCase(eventDto.signature)
-    })
-    it('should be an invalid provider', () => {
-      expect(provider).toBeDefined()
-      expect(provider).toEqual(EventProvider.NONE)
+      GetProviderUseCase(eventDto.signature);
+      } catch (error) {
+        expect((error as Error).message).toEqual('Invalid Provider')
+      }
     })
   });
 
